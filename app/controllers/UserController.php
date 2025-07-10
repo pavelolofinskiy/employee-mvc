@@ -62,4 +62,54 @@ class UserController
         }
         View::render('users/show', ['user' => $user]);
     }
+
+    public function edit($id)
+    {
+        $user = $this->employee->getById($id);
+        $departments = $this->department->getAll();
+
+        if (!$user) {
+            http_response_code(404);
+            echo "Сотрудник не найден";
+            return;
+        }
+
+        View::render('users/edit', ['user' => $user, 'departments' => $departments]);
+    }
+
+    public function update($id)
+    {
+        $data = [
+            'email' => trim($_POST['email'] ?? ''),
+            'name' => trim($_POST['name'] ?? ''),
+            'address' => trim($_POST['address'] ?? ''),
+            'phone' => trim($_POST['phone'] ?? ''),
+            'comments' => trim($_POST['comments'] ?? ''),
+            'department_id' => intval($_POST['department_id'] ?? 0),
+        ];
+
+        if (!$data['email'] || !$data['name']) {
+            echo "Email и имя обязательны";
+            return;
+        }
+
+        if ($this->employee->update($id, $data)) {
+            header('Location: /users');
+            exit;
+        } else {
+            echo "Ошибка при обновлении сотрудника";
+        }
+    }
+
+    public function destroy()
+    {
+        $id = intval($_POST['id'] ?? 0);
+
+        if ($id > 0 && $this->employee->delete($id)) {
+            header('Location: /users');
+            exit;
+        } else {
+            echo "Ошибка при удалении сотрудника";
+        }
+    }
 }

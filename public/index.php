@@ -12,6 +12,9 @@ $router->get('/users', 'UserController@index');
 $router->get('/user/{id}', 'UserController@show');
 $router->get('/add-user', 'UserController@create');
 $router->post('/add-user', 'UserController@store');
+$router->get('/user/{id}/edit', 'UserController@edit');
+$router->post('/user/{id}/edit', 'UserController@update');
+$router->post('/user/delete', 'UserController@destroy');
 
 $router->get('/departments', 'DepartmentController@index');
 $router->post('/departments', 'DepartmentController@store');

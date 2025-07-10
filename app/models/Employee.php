@@ -47,4 +47,26 @@ class Employee
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function update($id, $data)
+    {
+        $sql = "UPDATE employees SET email = :email, name = :name, address = :address, phone = :phone, comments = :comments, department_id = :department_id WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            ':email' => $data['email'],
+            ':name' => $data['name'],
+            ':address' => $data['address'],
+            ':phone' => $data['phone'],
+            ':comments' => $data['comments'],
+            ':department_id' => $data['department_id'] ?: null,
+            ':id' => $id,
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM employees WHERE id = :id");
+        return $stmt->execute([':id' => $id]);
+    }
 }
