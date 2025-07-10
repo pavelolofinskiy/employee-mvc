@@ -1,0 +1,6 @@
+/vendor/
+*.log
+*.sqlite
+.env
+.DS_Store
+.idea/
