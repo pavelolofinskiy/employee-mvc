@@ -16,6 +16,7 @@ $router->post('/add-user', 'UserController@store');
 $router->get('/departments', 'DepartmentController@index');
 $router->post('/departments', 'DepartmentController@store');
 $router->post('/departments/delete', 'DepartmentController@destroy');
+$router->get('/test-db', 'TestController@db');
 
 // Запускаем маршрутизатор
 $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
